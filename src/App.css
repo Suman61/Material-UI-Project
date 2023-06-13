@@ -1,6 +1,4 @@
 .top{
-  height: 100%;
-  width:  100%;
   color: aliceblue;
   padding-bottom: 10%;
   border-start-end-radius: 1rem;
@@ -10,11 +8,6 @@
   top:-8px;
   background: radial-gradient(circle at 12.3% 19.3%, #b7d1f3 0%, rgb(52, 192, 243) 100.2%);
 }
-/* .App-header:hover{
-  transform: sclae(1.5);
-  -webkit-transform: scale(1.5);
-  -ms-transform: scale(1.5);
-} */
 .App-header {
   text-align: center;
   background: radial-gradient(592px at 48.2% 50%, rgba(255, 255, 249, 0.6) 0%, rgb(160, 199, 254) 74.6%);
@@ -24,34 +17,27 @@
   align-items: center;
   justify-content: center;
 }
-
-/* #absolute-canvas a {
-  display: block;
-  position: absolute;
-  top: 50%; 
-  left: 50%;
-  width: 4em; 
-  height: 4em;
-  margin: -2em;
-  border-radius: 100%;    
-  background: black;
+.HomePages{
+  background: radial-gradient(592px at 48.2% 50%, rgba(255, 255, 249, 0.6) 0%, rgb(160, 199, 254) 74.6%);
 }
-.deg0 { 
-  transform: translate(12em);
-} /* 12em = half the width of the wrapper */
-/* .deg45 { 
-  transform: rotate(45deg) translate(12em) rotate(-45deg);
+.RegisterPages{
+  background: radial-gradient(592px at 48.2% 50%, rgba(255, 255, 249, 0.6) 0%, rgb(160, 199, 254) 74.6%);
 }
-.deg135 {
-  transform: rotate(135deg) translate(12em) rotate(-135deg);
-} */ 
-/* .deg180 { 
-  transform: translate(-12em);
+.form-group-register{
+  text-align: center;
+  color: aliceblue;
+  padding-top: 20%;
+  padding-bottom: 18.3em;
+  position:relative; 
 }
-.deg225 { 
-  transform: rotate(225deg) translate(12em) rotate(-225deg);
+.form-group{
+  text-align: center;
+  color: aliceblue;
+  padding-top: 20%;
+  padding-bottom: 20.8em;
+  position:relative; 
 }
-.deg315 { 
-  transform: rotate(315deg) translate(12em) rotate(-315deg);
-} */
+.input-container{
+  padding: 20px;
+}
 
