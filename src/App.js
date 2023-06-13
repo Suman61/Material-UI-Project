@@ -1,8 +1,30 @@
 import "./App.css";
-import MyComponent from "./demo";
+import MyComponent from "./component/demo";
+import MyCheck from "./component/check";
+import { useState } from "react";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import Login from "./component/Login";
+import Register from "./component/Register";
 
 function App() {
-  return <div className="App">{MyComponent()}</div>;
+  const [currentForm, SetCurrentForm] = useState("Registration");
+
+  const toggleForm = (formName) => {
+    SetCurrentForm(formName);
+  };
+
+  return (
+    <div className="App">
+      {/* <Router>
+        <Routes>
+          <Route exact path="/" element={<Login />}></Route>
+          <Route exact path="/check" element={<MyCheck />}></Route>
+          <Route exact path="/component" element={<MyComponent />}></Route>
+        </Routes>
+      </Router> */}
+      {currentForm === "login" ? <Login onFormSwitch={toggleForm}/>: <Register onFormSwitch={toggleForm}/>}
+    </div>
+  );
 }
 
 export default App;

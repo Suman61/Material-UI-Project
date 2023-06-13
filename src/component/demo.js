@@ -7,24 +7,10 @@ import Avatar from "@mui/material/Avatar";
 import Typography from "@mui/material/Typography";
 import { Box, ListItemButton } from "@mui/material";
 import { useState } from "react";
-import {
-  CenterFocusStrong,
-  Check,
-  CircleRounded,
-  Delete,
-  Edit,
-} from "@mui/icons-material";
+import { Check, Delete, Edit } from "@mui/icons-material";
 import { IconButton } from "@mui/material";
-// import makeStyles from "@mui/material";
-
-// const useStyles = makeStyles((theme) => ({
-//   iconButton: {
-//     borderRadius: "50%",
-//   },
-// }));
 
 const MyComponent = () => {
-  // const classes = useStyles();
   const [isClicked, setIsClicked] = useState(false);
 
   const handleClick = () => {
