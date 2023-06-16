@@ -5,24 +5,38 @@ function Register() {
   const [username, setUserName] = useState();
   const [password, setPassword] = useState();
   const [confirmpassword, setConfirmPassword] = useState();
+  const [email, setEmail] = useState();
+  const [errorMessage, setErrorMessage] = useState("");
 
-  const submitForm = (event) => {
+  const submitForm = async (event) => {
     event.preventDefault();
-    console.log(username + " " + password + " " + confirmpassword);
-    fetch("http://localhost:3000/register", {
-      method: "POST",
-      crossDomain: true,
-      headers: {
-        "Content-Type": "application/json",
-        Accept: "application/json",
-        "Access-Control-Allow-Origin": "*",
-      },
-      body: JSON.stringify({
-        username,
-        password,
-        confirmpassword,
-      }),
-    });
+    if (password !== confirmpassword) {
+      setErrorMessage("The passwords you entered do not match.");
+      return;
+    }
+    console.log( username + " " + password + " " + confirmpassword + " " + email );
+    const message = await (
+      await fetch("http://localhost:3001/register", {
+        method: "POST",
+        crossDomain: true,
+        headers: {
+          "Content-Type": "application/json",
+          Accept: "application/json",
+          "Access-Control-Allow-Origin": "*",
+        },
+        body: JSON.stringify({
+          username,
+          password,
+          confirmpassword,
+          email,
+        }),
+      })
+    ).json();
+    if (message.status) setErrorMessage(message.message);
+    else
+      setErrorMessage(
+        "Enter all Fields. Password must be alphanumeric and must have atleast 6 length. Enter a valid Email. "
+      );
   };
 
   return (
@@ -52,6 +66,19 @@ function Register() {
               onChange={(e) => setConfirmPassword(e.target.value)}
               placeholder="Please type Confirm Password"
             />
+          </div>
+          <div className="input-container">
+            <label style={{ color: "Black" }}>Email id </label>
+            <input
+              type="email"
+              onChange={(e) => setEmail(e.target.value)}
+              placeholder="Please type Email id"
+            />
+          </div>
+          <div className="error-message">
+            {errorMessage && (
+              <span style={{ color: "Red" }}>{errorMessage}</span>
+            )}
           </div>
           <button
             className="button-container"

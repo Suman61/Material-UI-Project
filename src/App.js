@@ -7,7 +7,7 @@ import Login from "./component/Login";
 import Register from "./component/Register";
 
 function App() {
-  const [currentForm, SetCurrentForm] = useState("Registration");
+  const [currentForm, SetCurrentForm] = useState('Login');
 
   const toggleForm = (formName) => {
     SetCurrentForm(formName);
@@ -15,14 +15,14 @@ function App() {
 
   return (
     <div className="App">
-      {/* <Router>
+      <Router>
         <Routes>
-          <Route exact path="/" element={<Login />}></Route>
+          <Route exact path="/Login" element={<Login />}></Route>
           <Route exact path="/check" element={<MyCheck />}></Route>
           <Route exact path="/component" element={<MyComponent />}></Route>
         </Routes>
-      </Router> */}
-      {currentForm === "login" ? <Login onFormSwitch={toggleForm}/>: <Register onFormSwitch={toggleForm}/>}
+      </Router>
+      {/* {currentForm === "Register" ? <Register onFormSwitch={toggleForm}/>: <Login onFormSwitch={toggleForm}/>} */}
     </div>
   );
 }

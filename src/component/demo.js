@@ -27,7 +27,7 @@ const MyComponent = () => {
           borderRadius: "1rem",
         }}
       >
-        <div className="top">11 August, sunday</div>
+        <div className="top">11 August, 2023</div>
         <ListItem
           alignItems="flex-start"
           sx={{
@@ -108,6 +108,7 @@ const MyComponent = () => {
                     bottom: "100%",
                     top: "10%",
                     left: "50%",
+                    transform: "translateX(50%)", 
                     width: "4em",
                     height: "4em",
                     margin: "-2em",
@@ -116,16 +117,17 @@ const MyComponent = () => {
                   <IconButton>
                     <Check
                       sx={{
-                        marginLeft: "400%",
+                        marginLeft: "auto",
+                        marginRight: "auto",
                         color: "skyblue",
                       }}
                     />
                   </IconButton>
                   <IconButton>
-                    <Edit sx={{ color: "skyblue", marginLeft: "100%" }} />
+                    <Edit sx={{ color: "skyblue", marginLeft: "auto", marginRight: "auto"}} />
                   </IconButton>
                   <IconButton>
-                    <Delete sx={{ marginLeft: "500%", color: "skyblue" }} />
+                    <Delete sx={{ color: "skyblue", marginLeft: "auto", marginRight: "auto" }} />
                   </IconButton>
                 </Box>
               </Box>
