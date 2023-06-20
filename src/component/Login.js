@@ -18,7 +18,7 @@ export default function Login(props) {
     event.preventDefault()
     // Make a POST request to the login endpoint
     axios
-      .post("http://localhost:3001/login", {
+      .post("http://localhost:4000/login", {
         username: username,
         password: password,
       })

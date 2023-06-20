@@ -1,20 +1,81 @@
 import React from "react";
 import List from "@mui/material/List";
 import ListItem from "@mui/material/ListItem";
-import Divider from "@mui/material/Divider";
 import ListItemText from "@mui/material/ListItemText";
 import Avatar from "@mui/material/Avatar";
-import Typography from "@mui/material/Typography";
-import { Box, ListItemButton } from "@mui/material";
+import { Button, ListItemButton } from "@mui/material";
 import { useState } from "react";
-import { Check, Delete, Edit } from "@mui/icons-material";
-import { IconButton } from "@mui/material";
+import Link from "react-dom";
 
 const MyComponent = () => {
   const [isClicked, setIsClicked] = useState(false);
+  const [errorMessage, setErrorMessage] = useState("");
 
   const handleClick = () => {
     setIsClicked(true);
+  };
+
+
+  const [isPrimaryEditing, setIsPrimaryEditing] = useState(false);
+  const [isSecondaryEditing, setIsSecondaryEditing] = useState(false);
+  const [primaryText, setPrimaryText] = useState("Time");
+  const [secondaryText, setSecondaryText] = useState("Name");
+
+  const handlePrimaryClick = () => {
+    setIsPrimaryEditing(true);
+  };
+
+  const handleSecondaryClick = () => {
+    setIsSecondaryEditing(true);
+  };
+
+  const handlePrimaryBlur = () => {
+    setIsPrimaryEditing(false);
+  };
+
+  const handleSecondaryBlur = () => {
+    setIsSecondaryEditing(false);
+  };
+
+  const handlePrimaryChange = (event) => {
+    setPrimaryText(event.target.value);
+  };
+
+  const handleSecondaryChange = (event) => {
+    setSecondaryText(event.target.value);
+  };
+  
+  const currentDate = new Date().toLocaleDateString("en-US", {
+    weekday: "long",
+    year: "numeric",
+    month: "long",
+    day: "numeric",
+  });
+  
+  const Logout = () => {
+    
+  }
+  const submitTodo = async (event) => {
+    event.preventDefault();
+
+    console.log("Function call Successfully on ToDO Yeaah!!!");
+    const message = await (
+      await fetch("http://localhost:4000/todo", {
+        method: "POST",
+        crossDomain: true,
+        headers: {
+          "Content-Type": "application/json",
+          Accept: "application/json",
+          "Access-Control-Allow-Origin": "*",
+        },
+        body: JSON.stringify({
+          primaryText,
+          secondaryText,
+        }),
+      })
+    ).json();
+    if (message.status) setErrorMessage(message.message);
+    else setErrorMessage("Error Messages.");
   };
 
   return (
@@ -22,157 +83,62 @@ const MyComponent = () => {
       <List
         sx={{
           width: "100%",
-          maxWidth: 300,
+          maxWidth: 500,
           bgcolor: "background.paper",
           borderRadius: "1rem",
         }}
       >
-        <div className="top">11 August, 2023</div>
+        <div className="top">{currentDate}</div>
         <ListItem
           alignItems="flex-start"
-          sx={{
-            "&:hover": {
-              transform: "scale(1.5)",
-              backgroundColor: "#fff",
-              borderLeftStyle: "solid",
-              borderLeftColor: "skyblue",
-            },
-          }}
         >
-          <ListItemButton>
-            <ListItemText
-              primary={
-                <React.Fragment>
-                  <Typography
-                    sx={{
-                      display: "inline",
-                    }}
-                    component="span"
-                    variant="body2"
-                    color="text.primary"
-                  ></Typography>
-                  {"9:45"}
-                </React.Fragment>
-              }
-              secondary={
-                <React.Fragment>
-                  <Typography
-                    sx={{ display: "inline" }}
-                    component="span"
-                    variant="body2"
-                    color="text.secondary"
-                  ></Typography>
-                  {"Teamwork"}
-                </React.Fragment>
-              }
-            />
-            <Avatar
-              alt="Remy Sharp"
-              src="https://images.pexels.com/photos/220453/pexels-photo-220453.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
-            />
-          </ListItemButton>
-        </ListItem>
-        <Divider />
-        <ListItem
-          alignItems="flex-start"
-          sx={{
-            "&:hover": {
-              transform: "scale(1.5)",
-              backgroundColor: "white",
-              borderLeftStyle: "solid",
-              borderLeftColor: "skyblue",
-            },
-          }}
-        >
-          <ListItemButton onClick={handleClick}>
-            <ListItemText
-              secondary="Meet Emma"
-              primary={
-                <React.Fragment>
-                  <Typography
-                    sx={{ display: "inline" }}
-                    component="span"
-                    variant="body2"
-                    color="text.primary"
-                  ></Typography>
-                  {"12:31"}
-                </React.Fragment>
-              }
-            />
-            {isClicked && (
-              <Box display="flex" alignItems="center">
-                <Box
-                  sx={{
-                    display: "block",
-                    position: "absolute",
-                    bottom: "100%",
-                    top: "10%",
-                    left: "50%",
-                    transform: "translateX(50%)", 
-                    width: "4em",
-                    height: "4em",
-                    margin: "-2em",
-                  }}
-                >
-                  <IconButton>
-                    <Check
-                      sx={{
-                        marginLeft: "auto",
-                        marginRight: "auto",
-                        color: "skyblue",
-                      }}
-                    />
-                  </IconButton>
-                  <IconButton>
-                    <Edit sx={{ color: "skyblue", marginLeft: "auto", marginRight: "auto"}} />
-                  </IconButton>
-                  <IconButton>
-                    <Delete sx={{ color: "skyblue", marginLeft: "auto", marginRight: "auto" }} />
-                  </IconButton>
-                </Box>
-              </Box>
+          <ListItemButton 
+          onClick={handleClick}
+          sx={{ display: "flex", justifyContent: "center" }}
+          >
+            {isPrimaryEditing ? (
+              <input
+                type="time"
+                value={primaryText}
+                onChange={handlePrimaryChange}
+                onBlur={handlePrimaryBlur}
+                style={{ fontSize: '15px' }}
+              />
+            ) : (
+              <ListItemText
+                primary={primaryText}
+                onClick={handlePrimaryClick}
+              />
             )}
-            <Avatar
-              alt="Travis Howard"
-              src="https://images.pexels.com/photos/2589653/pexels-photo-2589653.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
-            />
-          </ListItemButton>
-        </ListItem>
-        <Divider />
-        <ListItem
-          alignItems="flex-start"
-          sx={{
-            "&:hover": {
-              transform: "scale(1.5)",
-              backgroundColor: "#fff",
-              borderLeftStyle: "solid",
-              borderLeftColor: "skyblue",
-            },
-          }}
-        >
-          <ListItemButton>
-            <ListItemText
-              style={{ textDecoration: "line-through" }}
-              secondary="Have Meeting"
-              primary={
-                <React.Fragment>
-                  <Typography
-                    sx={{ display: "inline" }}
-                    component="span"
-                    variant="body2"
-                    color="text.primary"
-                  ></Typography>
-                  {"8:20"}
-                </React.Fragment>
-              }
-            />
-            <Avatar
-              alt="Cindy Baker"
-              src="https://images.pexels.com/photos/2726111/pexels-photo-2726111.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
-            />
+            {isSecondaryEditing ? (
+              <input
+                type="text"
+                value={secondaryText}
+                onChange={handleSecondaryChange}
+                onBlur={handleSecondaryBlur}
+                style={{ fontSize: '20px' }}
+              />
+            ) : (
+              <ListItemText
+                secondary={secondaryText}
+                onClick={handleSecondaryClick}
+              />
+            )}
+            <Avatar alt="Remy Sharp" src="https://images.pexels.com/photos/220453/pexels-photo-220453.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1" />
           </ListItemButton>
         </ListItem>
       </List>
+      <br />
+      <Button 
+      sx={{ color: "aliceblue", backgroundColor: "rgb(52, 192, 243)" }} onClick={submitTodo}>
+        Add
+      </Button>&nbsp;
+      <Button 
+      sx={{backgroundColor: "red", color: "white"}}
+      onClick={Logout}
+      >
+      Logout
+      </Button>
     </div>
   );
 };

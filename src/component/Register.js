@@ -16,7 +16,7 @@ function Register() {
     }
     console.log( username + " " + password + " " + confirmpassword + " " + email );
     const message = await (
-      await fetch("http://localhost:3001/register", {
+      await fetch("http://localhost:4000/register", {
         method: "POST",
         crossDomain: true,
         headers: {

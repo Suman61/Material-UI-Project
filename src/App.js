@@ -5,13 +5,18 @@ import { useState } from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Login from "./component/Login";
 import Register from "./component/Register";
+import ProtectedRoute from "react-dom"
 
 function App() {
-  const [currentForm, SetCurrentForm] = useState('Login');
+  const [currentForm, SetCurrentForm] = useState("Login");
 
   const toggleForm = (formName) => {
     SetCurrentForm(formName);
   };
+
+  // const toggleForm = () => {
+  //   SetCurrentForm(currentForm === "Login" ? "Register" : "Login");
+  // };
 
   return (
     <div className="App">
