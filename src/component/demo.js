@@ -5,16 +5,15 @@ import ListItemText from "@mui/material/ListItemText";
 import Avatar from "@mui/material/Avatar";
 import { Button, ListItemButton } from "@mui/material";
 import { useState } from "react";
-import Link from "react-dom";
 
 const MyComponent = () => {
-  const [isClicked, setIsClicked] = useState(false);
+
+  const [isClicked, setIsClicked] = useState();
   const [errorMessage, setErrorMessage] = useState("");
 
   const handleClick = () => {
     setIsClicked(true);
   };
-
 
   const [isPrimaryEditing, setIsPrimaryEditing] = useState(false);
   const [isSecondaryEditing, setIsSecondaryEditing] = useState(false);
@@ -53,11 +52,13 @@ const MyComponent = () => {
   });
   
   const Logout = () => {
-    
+    // localStorage.setItem('login', false);
+    localStorage.removeItem('login');
+    console.log("Logout Button Prssed!");
+    window.location.href = "./Login"
   }
   const submitTodo = async (event) => {
     event.preventDefault();
-
     console.log("Function call Successfully on ToDO Yeaah!!!");
     const message = await (
       await fetch("http://localhost:4000/todo", {
@@ -94,7 +95,7 @@ const MyComponent = () => {
         >
           <ListItemButton 
           onClick={handleClick}
-          sx={{ display: "flex", justifyContent: "center" }}
+          sx={{ display: "flex", justifyContent: "center", paddingTop: "5%"}}
           >
             {isPrimaryEditing ? (
               <input
@@ -130,11 +131,12 @@ const MyComponent = () => {
       </List>
       <br />
       <Button 
-      sx={{ color: "aliceblue", backgroundColor: "rgb(52, 192, 243)" }} onClick={submitTodo}>
-        Add
+      sx={{ color: "aliceblue", backgroundColor: "rgb(52, 192, 243)", "&: hover": {backgroundColor: "rgb(52, 192, 243)"}}}
+      onClick={submitTodo}>
+      Add
       </Button>&nbsp;
       <Button 
-      sx={{backgroundColor: "red", color: "white"}}
+      sx={{backgroundColor: "red", color: "white", "&: hover": {backgroundColor: "red"} }}
       onClick={Logout}
       >
       Logout
