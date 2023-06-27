@@ -1,95 +1,110 @@
 import React from "react";
-import { useState, useRef, useEffect } from "react";
-import { Route, Router, Routes } from "react-router-dom";
-import MyComponent from "./demo";
-import { Switch } from "@mui/material";
-import { Link } from "react-router-dom";
+import { useState } from "react";
 import axios from "axios";
-import { useNavigate } from 'react-router-dom';
-// import jwt from "jsonwebtoken";
+import { useNavigate } from "react-router-dom";
+import { Button, InputAdornment } from "@mui/material";
+import Visibility from "@mui/icons-material/Visibility";
+import VisibilityOff from "@mui/icons-material/VisibilityOff";
+import IconButton from '@mui/material/IconButton';
 
 export function Login(props) {
-  // const login = () => {
-  //   localStorage.setItem('login', true)
-  // }
-
-  // useEffect(() => {
-  //   let login = localStorage.getItem("login");
-  //   if (login) {
-  //     navigate("/component");
-  //   }
-  // });
-
   const [username, setUserName] = useState();
   const [password, setPassword] = useState();
   const navigate = useNavigate();
   const [errorMessage, setErrorMessage] = useState("");
 
+  const [visible, setVisible] = useState(false);
 
   const handleLogin = (event) => {
-    // localStorage.setItem('login', true)
-    event.preventDefault()
-    // Make a POST request to the login endpoint
+    event.preventDefault();
     axios
       .post("http://localhost:4000/login", {
         username: username,
         password: password,
       })
       .then((response) => {
-        // Check the response from the server
         if (response.data.success) {
-          // User login successful
           console.log("Login successful");
-          localStorage.setItem('login', true)
-          navigate('/component');
+          localStorage.setItem("login", true);
+          navigate("/component");
         } else {
-          // User login failed
           console.log("Invalid username or password");
-          setErrorMessage(
-            "Invalid username or Password"
-          );
+          setErrorMessage("Invalid username or Password");
         }
       })
       .catch((error) => {
         console.log("Error occurred during login:", error);
       });
   };
-  
 
   return (
-    <div className="HomePages">
+    <div className="Login">
       <div className="form-group">
         <form>
           <div className="input-container">
-            <label style={{ color: "Black" }}>Username </label>
+            <label style={{ color: "black" }}>Username </label>
             <input
+              style={{
+                border: "2px solid gray",
+                borderRadius: "4px",
+                margin: "8px 0",
+                width: "85%",
+                padding: "12px 20px",
+              }}
               type="text"
               onChange={(e) => setUserName(e.target.value)}
               placeholder="UserName"
             />
           </div>
           <div className="input-container">
-            <label style={{ color: "Black" }}>Password </label>
+            <label style={{ color: "black" , position: "relative"}}>Password </label>
             <input
-              type="password"
+              style={{
+                border: "2px solid gray ",
+                borderRadius: "4px",
+                margin: "8px 0",
+                width: "85%",
+                padding: "12px 20px",
+              }}
+              type={visible ? "text" : "password"}
               onChange={(e) => setPassword(e.target.value)}
               placeholder="Password"
             />
+            <span
+            style= {{color: "gray", position: "relative", top:"-40px", left:"135px"}}
+            onClick={() => setVisible(!visible)}>
+              {visible ? <Visibility /> : <VisibilityOff />}
+            </span>
           </div>
           <div className="error-message">
             {errorMessage && (
               <span style={{ color: "Red" }}>{errorMessage}</span>
             )}
           </div>
-          </form>
-          <button
-            onClick={handleLogin}
-            sx={{ color: "aliceblue", backgroundColor: "rgb(52, 192, 243)", "&: hover": {backgroundColor: "rgb(52, 192, 243)"}}}
-          >
-            Login
-          </button>
-        <br /><br />
-        <button onClick={() => props.onFormSwitch("Register")}>Sign Up</button>
+        </form>
+        <div className="d-flex justify-content-center">
+        <Button
+          onClick={handleLogin}
+          sx={{
+            color: "aliceblue",
+            backgroundColor: "rgb(52, 192, 243)",
+            "&: hover": { backgroundColor: "rgb(52, 192, 243)" },
+          }}
+        >
+          Sign In
+        </Button>
+        &nbsp; 
+        <Button
+          onClick={() => navigate("/signup")}
+          sx={{
+            color: "aliceblue",
+            backgroundColor: "rgb(52, 192, 243)",
+            "&: hover": { backgroundColor: "rgb(52, 192, 243)" },
+          }}
+        >
+          Sign Up
+        </Button>
+        </div>
       </div>
     </div>
   );

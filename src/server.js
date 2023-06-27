@@ -6,6 +6,7 @@ const mongoose = require("mongoose");
 const registerValidate = require("./middleware/validator");
 app.use(express.json());
 const cors = require("cors");
+// const jwt = require('jsonwebtoken');
 
 app.use(cors());
 const mongoUrl =
@@ -20,12 +21,12 @@ mongoose
   })
   .catch((e) => console.log(e));
 
-app.get("/users", async (req, res) => {
+app.get("/users", async (req, res) => {   // Register User Data
   try {
     const users = await User.find();
     res.status(200).json(users);
   } catch (error) {
-    res.status(500).json({ error: "Failed to fetch users" }); // Handle error case
+    res.status(500).json({ error: "Failed to fetch users" }); 
   }
 });
 
@@ -64,13 +65,13 @@ app.post("/login", async (req, res) => {
 });
 
 app.post("/todo", async (req, res) => {
-  const { primaryText, secondaryText } = req.body;
+  const { primaryText, secondaryText  } = req.body;
   try {
     await Todo.create({
       primaryText,
       secondaryText,
     });
-    res.status(200).send({ status: true, message: "registered successfully" });
+    res.status(200).send({ status: true, message: "registered successfully"});
   } catch (error) {
     res
       .status(500)

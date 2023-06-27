@@ -5,9 +5,12 @@ import ListItemText from "@mui/material/ListItemText";
 import Avatar from "@mui/material/Avatar";
 import { Button, ListItemButton } from "@mui/material";
 import { useState } from "react";
+import { MessageSharp } from "@mui/icons-material";
+import { useNavigate } from "react-router-dom";
 
 const MyComponent = () => {
 
+  const navigate = useNavigate();
   const [isClicked, setIsClicked] = useState();
   const [errorMessage, setErrorMessage] = useState("");
 
@@ -20,15 +23,18 @@ const MyComponent = () => {
   const [primaryText, setPrimaryText] = useState("Time");
   const [secondaryText, setSecondaryText] = useState("Name");
 
-  const handlePrimaryClick = () => {
+  const handlePrimaryClick = (event) => {
+    event.stopPropagation();
     setIsPrimaryEditing(true);
   };
 
-  const handleSecondaryClick = () => {
+  const handleSecondaryClick = (event) => {
+    event.stopPropagation();
     setIsSecondaryEditing(true);
   };
 
-  const handlePrimaryBlur = () => {
+  const handlePrimaryBlur = (event) => {
+    event.stopPropagation();
     setIsPrimaryEditing(false);
   };
 
@@ -52,14 +58,13 @@ const MyComponent = () => {
   });
   
   const Logout = () => {
-    // localStorage.setItem('login', false);
     localStorage.removeItem('login');
     console.log("Logout Button Prssed!");
     window.location.href = "./Login"
   }
   const submitTodo = async (event) => {
     event.preventDefault();
-    console.log("Function call Successfully on ToDO Yeaah!!!");
+    console.log("Function call Successfully on ToDO ");
     const message = await (
       await fetch("http://localhost:4000/todo", {
         method: "POST",
@@ -80,6 +85,7 @@ const MyComponent = () => {
   };
 
   return (
+    <div className="topnav">
     <div className="App-header" id="absolute-canvas">
       <List
         sx={{
@@ -91,11 +97,12 @@ const MyComponent = () => {
       >
         <div className="top">{currentDate}</div>
         <ListItem
-          alignItems="flex-start"
+          sx ={{ alignItems:"flex-start"}}
         >
           <ListItemButton 
+          disablePadding
           onClick={handleClick}
-          sx={{ display: "flex", justifyContent: "center", paddingTop: "5%"}}
+          sx={{ width:"40%",display: "flex", paddingTop: "5%", textAlign:"center"}}
           >
             {isPrimaryEditing ? (
               <input
@@ -103,7 +110,7 @@ const MyComponent = () => {
                 value={primaryText}
                 onChange={handlePrimaryChange}
                 onBlur={handlePrimaryBlur}
-                style={{ fontSize: '15px' }}
+                style={{fontSize: "20px"}}
               />
             ) : (
               <ListItemText
@@ -117,7 +124,7 @@ const MyComponent = () => {
                 value={secondaryText}
                 onChange={handleSecondaryChange}
                 onBlur={handleSecondaryBlur}
-                style={{ fontSize: '20px' }}
+                style={{width:"40%",fontSize: "20px", border: "2px solid gray", alignItems:"center", textAlign:"center"}}
               />
             ) : (
               <ListItemText
@@ -130,6 +137,7 @@ const MyComponent = () => {
         </ListItem>
       </List>
       <br />
+      <div className="d-flex justify-content-center">
       <Button 
       sx={{ color: "aliceblue", backgroundColor: "rgb(52, 192, 243)", "&: hover": {backgroundColor: "rgb(52, 192, 243)"}}}
       onClick={submitTodo}>
@@ -140,7 +148,15 @@ const MyComponent = () => {
       onClick={Logout}
       >
       Logout
+      </Button>&nbsp;
+      <Button 
+      sx={{backgroundColor: "Black", color: "white", "&: hover": {backgroundColor: "Black"} }}
+      onClick={()=> navigate("/check")}
+      >
+      check
       </Button>
+      </div>
+    </div>
     </div>
   );
 };
