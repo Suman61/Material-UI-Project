@@ -1,11 +1,9 @@
-import React from "react";
-import { useState } from "react";
+import { React, useState} from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
-import { Button, InputAdornment } from "@mui/material";
+import { Button } from "@mui/material";
 import Visibility from "@mui/icons-material/Visibility";
 import VisibilityOff from "@mui/icons-material/VisibilityOff";
-import IconButton from '@mui/material/IconButton';
 
 export function Login(props) {
   const [username, setUserName] = useState();
@@ -53,7 +51,7 @@ export function Login(props) {
               }}
               type="text"
               onChange={(e) => setUserName(e.target.value)}
-              placeholder="UserName"
+              placeholder="Username"
             />
           </div>
           <div className="input-container">

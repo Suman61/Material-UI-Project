@@ -1,10 +1,8 @@
-import React from "react";
-import { useState } from "react";
+import {React, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Button } from "@mui/material";
 import Visibility from "@mui/icons-material/Visibility";
 import VisibilityOff from "@mui/icons-material/VisibilityOff";
-import { green } from "@mui/material/colors";
 
 function Register() {
   const [username, setUserName] = useState();
@@ -12,7 +10,6 @@ function Register() {
   const [confirmpassword, setConfirmPassword] = useState();
   const [email, setEmail] = useState();
   const [errorMessage, setErrorMessage] = useState("");
-  const[style, setStyle] = useState();
   const navigate = useNavigate();
 
   const [visibleFirst, setVisibleFirst] = useState(false);
@@ -45,11 +42,13 @@ function Register() {
       })
     ).json();
     if (message.status) {
-      setErrorMessage(message.message);
+        setErrorMessage(message.message);
+        window.alert("registered successfully");
+        navigate("/login");
     }
     else
       setErrorMessage(
-        "Enter all Fields. Password must be alphanumeric and must have atleast 6 length. Enter a valid Email. "
+        "Enter all Fields. Password must be alphanumeric and must have atleast 6 length. Enter a valid Email."
       );
   };
 
