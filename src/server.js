@@ -12,7 +12,7 @@ app.use(cors());
 const mongoUrl =
   "mongodb+srv://return0:12345@cluster0.fpghiok.mongodb.net/?retryWrites=true&w=majority";
 
-mongoose
+mongoose 
   .connect(mongoUrl, {
     useNewUrlParser: true,
   })
