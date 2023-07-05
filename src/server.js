@@ -6,6 +6,7 @@ const mongoose = require("mongoose");
 const registerValidate = require("./middleware/validator");
 app.use(express.json());
 const cors = require("cors");
+const BASE_URL = process.env.BASE_URL;
 
 app.use(cors());
 const mongoUrl =
@@ -64,9 +65,10 @@ app.post("/login", async (req, res) => {
 });
 
 app.post("/todo", async (req, res) => {
-  const { primaryText, secondaryText  } = req.body;
+  const { username, primaryText, secondaryText  } = req.body;
   try {
     await Todo.create({
+      username,
       primaryText,
       secondaryText,
     });
@@ -86,7 +88,7 @@ app.post("/todo", async (req, res) => {
 
 app.get("/todo2", async (req, res) => {
   try {
-    const users = await Todo.find();
+    const users = await Todo.find({});
     res.status(200).json(users);
   } catch (error) {
     res.status(500).json({ error: "Failed to fetch users" });

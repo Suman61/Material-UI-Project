@@ -8,6 +8,7 @@ import { useNavigate } from "react-router-dom";
 import AccessAlarmIcon from '@mui/icons-material/AccessAlarm';
 import TimePicker from "react-time-picker"
 import { Margin } from "@mui/icons-material";
+import { handleLogin, Login } from "./Login";
 
 const MyComponent = () => {
   const navigate = useNavigate();
@@ -59,12 +60,16 @@ const MyComponent = () => {
 
   const Logout = () => {
     localStorage.removeItem("login");
-    console.log("Logout Button Prssed!");
+    localStorage.removeItem("username");
     window.location.href = "./Login";
   };
+
+
+
   const submitTodo = async (event) => {
     event.preventDefault();
     console.log("Function call Successfully on ToDO ");
+    const username = localStorage.getItem("username");
     const message = await (
       await fetch("http://localhost:4000/todo", {
         method: "POST",
@@ -75,11 +80,13 @@ const MyComponent = () => {
           "Access-Control-Allow-Origin": "*",
         },
         body: JSON.stringify({
+          username,
           primaryText,
           secondaryText,
         }),
       })
     ).json();
+
     if (message.status) setErrorMessage(message.message);
     else setErrorMessage("Error Messages.");
   };
@@ -87,6 +94,7 @@ const MyComponent = () => {
   return (
     <div className="topnav">
       <div className="App-header" id="absolute-canvas">
+        <h2 style={{color: "skyblue"}}>Hello { localStorage.getItem("username")}</h2>
         <List
           sx={{
             width: "100%",

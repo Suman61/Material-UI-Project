@@ -24,6 +24,7 @@ export function Login(props) {
         if (response.data.success) {
           console.log("Login successful");
           localStorage.setItem("login", true);
+          localStorage.setItem("username",username);
           navigate("/component");
         } else {
           console.log("Invalid username or password");

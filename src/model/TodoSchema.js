@@ -1,7 +1,7 @@
 const mongoose = require("mongoose");
 
 const TodoSchema = new mongoose.Schema({
-  // username: String,
+  username: String,
   primaryText: String,
   secondaryText: String,
 });
